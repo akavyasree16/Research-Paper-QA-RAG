@@ -2,7 +2,7 @@
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://research-paper-app-rag-yszz5njyeefut2sfe2nrze.streamlit.app/)
 
-> **Project Link:** [Click here to launch the application](https://research-paper-app-rag-yszz5njyeefut2sfe2nrze.streamlit.app/)
+> **Project Link:** [Click here to access research assistant](https://research-paper-app-rag-yszz5njyeefut2sfe2nrze.streamlit.app/)
 
 ---
 
