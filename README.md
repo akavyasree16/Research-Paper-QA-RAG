@@ -1,11 +1,5 @@
 ## **🔍 Research Paper Question Answering System Using RAG**
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://research-paper-app-rag-yszz5njyeefut2sfe2nrze.streamlit.app/)
-
-> **🚀 Live Demo:** [Click here to access the application](https://research-paper-app-rag-yszz5njyeefut2sfe2nrze.streamlit.app/)
-
----
-
 ### 📖 **Project Overview**
 Research papers are often lengthy and technical, making it time-consuming for students and faculty to locate specific information. This project provides an **AI-powered solution** that allows users to upload **PDF research papers** and ask questions in natural language. 
 
