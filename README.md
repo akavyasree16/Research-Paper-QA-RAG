@@ -53,8 +53,6 @@ The system is designed for academic precision, ensuring every answer is backed b
 
 ---
 
----
-
 ### 🔍 **Key Challenges Solved**
 
 * **⚡ Overcoming Context Limits:** Research papers are often too long for a single LLM prompt. By using **RAG**, we only send the relevant portions, staying within the model's token limits.
