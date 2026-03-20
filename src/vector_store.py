@@ -1,4 +1,3 @@
-import os
 import uuid
 import chromadb
 import numpy as np
@@ -6,77 +5,71 @@ from typing import List, Any
 
 class VectorStore:
     """
-    Manages research paper embeddings in an In-Memory (Ephemeral) ChromaDB.
-    This ensures that each user session is private and data is not shared.
+    Manages private, in-memory research paper embeddings using unique UUIDs.
+    Includes error handling to ensure the app doesn't crash during ingestion.
     """
 
-    def __init__(
-        self,
-        collection_name: str = "research_papers"
-    ):
-        self.collection_name = collection_name
+    def __init__(self):
         self.client = None
         self.collection = None
+        self.unique_id = uuid.uuid4().hex[:8]
+        self.collection_name = f"research_{self.unique_id}"
         self._initialize_store()
 
     def _initialize_store(self):
-        """Initialize ChromaDB as an Ephemeral (In-Memory) client"""
+        """Initialize ChromaDB as an Ephemeral (In-Memory) client with error handling."""
         try:
-            # SWITCHED: Using EphemeralClient instead of PersistentClient for privacy
             self.client = chromadb.EphemeralClient()
-            
-            # Using Cosine Similarity as the distance metric
             self.collection = self.client.get_or_create_collection(
                 name=self.collection_name,
-                metadata={"hnsw:space": "cosine"} 
+                metadata={"hnsw:space": "cosine"}
             )
-            print(f"Private Vector Store initialized in memory.")
+            print(f"DEBUG: Private session {self.collection_name} initialized.")
         except Exception as e:
-            print(f"Error initializing vector store: {e}")
-            raise
+            print(f"Failed to initialize Vector Store: {e}")
+            raise # Re-raise so the app knows it can't start
 
     def add_documents(self, documents: List[Any], embedding_manager: Any):
-        """
-        Takes LangChain documents, generates embeddings, and saves to the in-memory collection.
-        """
+        """Adds documents to the private collection with safety checks."""
         if not documents:
             return
 
-        texts = [doc.page_content for doc in documents]
-        
-        # Generate embeddings using your manager
-        embeddings = embedding_manager.generate_embeddings(texts)
-        
-        # Create unique IDs for this session
-        ids = [f"id_{uuid.uuid4().hex[:10]}" for _ in range(len(documents))]
-        metadatas = [dict(doc.metadata) for doc in documents]
-
         try:
+            texts = [doc.page_content for doc in documents]
+            embeddings = embedding_manager.generate_embeddings(texts)
+            
+            ids = [f"id_{uuid.uuid4().hex[:10]}" for _ in range(len(documents))]
+            metadatas = [dict(doc.metadata) for doc in documents]
+
             self.collection.add(
                 ids=ids,
                 embeddings=embeddings.tolist(),
                 metadatas=metadatas,
                 documents=texts
             )
-            print(f"Added {len(documents)} chunks to the private session database.")
+            print(f"Successfully added {len(documents)} chunks.")
         except Exception as e:
-            print(f"Error adding to Chroma: {e}")
+            print(f"Error during document ingestion: {e}")
+            # We don't 'raise' here so the user can try uploading again
 
     def clear_collection(self):
-        """Wipes the session database for a fresh start."""
+        """Wipes the private collection safely."""
         try:
             self.client.delete_collection(self.collection_name)
             self.collection = self.client.create_collection(
                 name=self.collection_name,
                 metadata={"hnsw:space": "cosine"}
             )
-            print("Session database cleared.")
         except Exception as e:
             print(f"Error clearing collection: {e}")
 
     def query(self, query_embedding: np.ndarray, n_results: int = 5):
-        """Standard query method for the retriever."""
-        return self.collection.query(
-            query_embeddings=query_embedding.tolist(),
-            n_results=n_results
-        )
+        """Queries the private collection for relevant research segments."""
+        try:
+            return self.collection.query(
+                query_embeddings=query_embedding.tolist(),
+                n_results=n_results
+            )
+        except Exception as e:
+            print(f"Search error: {e}")
+            return {"documents": [], "metadatas": [], "distances": []}

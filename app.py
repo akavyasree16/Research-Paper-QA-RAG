@@ -28,12 +28,14 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 # --- 3. SESSION-BASED INITIALIZATION (PRIVATE TO EACH USER) ---
 # Instead of @st.cache_resource (which shares data), we use st.session_state
 if "retriever" not in st.session_state:
-    with st.spinner("Initializing Private Research Engine..."):
-        # Create fresh components for this specific browser session
+    with st.spinner("Creating your private research space..."):
+        # These objects are now strictly tied to THIS browser tab
         v_store = VectorStore() 
         e_manager = EmbeddingManager()
         st.session_state.retriever = RAGRetriever(v_store, e_manager)
-        time.sleep(0.5)
+        
+        # This ensures chat history starts fresh with the new database
+        st.session_state.messages = []
 
 retriever = st.session_state.retriever
 
