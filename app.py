@@ -18,9 +18,19 @@ hide_st_style = """
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
-            /* This hides the "View Source" and GitHub links on Streamlit Cloud */
-            .viewerBadge_container__1QS13 {display: none !important;}
+            
+            /* Hides the "Deploy" button and GitHub icon in the top right */
             .stAppDeployButton {display: none !important;}
+            
+            /* Hides the "Made with Streamlit" footer and the 'Manage App' link */
+            div[data-testid="stStatusWidget"] {visibility: hidden;}
+            
+            /* Hides the "View Source" / "Report a bug" / "Hosted with Streamlit" link at the bottom right */
+            .st-emotion-cache-1ghh6y0 {display: none !important;} 
+            .st-emotion-cache-6q9sum {display: none !important;}
+            
+            /* Targets any floating badges or connection status icons */
+            [data-testid="stDecoration"] {display: none !important;}
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
