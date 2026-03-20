@@ -2,13 +2,13 @@ from typing import List, Dict, Any
 from src.vector_store import VectorStore
 from src.embeddings import EmbeddingManager
 
-# class RAGRetriever:
-#     """Handles query-based retrieval from the vector store"""
+class RAGRetriever:
+    """Handles query-based retrieval from the vector store"""
 
-#     def __init__(self, vector_store: VectorStore, embedding_manager: EmbeddingManager):
-#         # Type hints make this look very professional for your project
-#         self.vector_store = vector_store
-#         self.embedding_manager = embedding_manager
+    def __init__(self, vector_store: VectorStore, embedding_manager: EmbeddingManager):
+        # Type hints make this look very professional for your project
+        self.vector_store = vector_store
+        self.embedding_manager = embedding_manager
 
 #     def retrieve(self, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
 #         print(f"--- Retrieving for: {query} ---")
