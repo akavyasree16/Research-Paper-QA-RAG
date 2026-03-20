@@ -19,7 +19,7 @@ Instead of reading the entire document, the system identifies the **most relevan
 * **PDF Parsing:** `PyMuPDFLoader` (LangChain Community)
 * **Orchestration:** `langchain`, `langchain-core`, `langchain-community`
 * **Embeddings:** `sentence-transformers`
-* **Vector Database:** `ChromaDB` (or `FAISS-cpu`)
+* **Vector Database:** `ChromaDB`
 * **LLM Integration:** `langchain-groq` (using **Groq** for high-speed inference)
 * **Environment Management:** `python-dotenv`
 
