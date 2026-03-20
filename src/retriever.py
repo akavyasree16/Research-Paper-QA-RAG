@@ -1,6 +1,6 @@
-# from typing import List, Dict, Any
-# from src.vector_store import VectorStore
-# from src.embeddings import EmbeddingManager
+from typing import List, Dict, Any
+from src.vector_store import VectorStore
+from src.embeddings import EmbeddingManager
 
 # class RAGRetriever:
 #     """Handles query-based retrieval from the vector store"""
