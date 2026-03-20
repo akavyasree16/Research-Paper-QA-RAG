@@ -39,7 +39,7 @@ class RAGRetriever:
 #         except Exception as e:
 #             print(f" Error during retrieval: {e}")
 #             return []
-def retrieve(self, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    def retrieve(self, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
         print(f"--- Retrieving for: {query} ---")
         
         try:
